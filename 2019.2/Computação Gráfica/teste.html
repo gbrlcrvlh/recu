@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Processando o Canvas na seção HEAD</title>
+		<style>
+			#meu_canvas{
+				border: 1px solid black;
+			}
+		</style>
+
+		<script>
+			function initCanvas(){
+				// Canvas e contexto
+				var canvas = document.getElementById('meu_canvas');
+				var context = canvas.getContext('2d');
+				context.scale(10, 10);
+				
+				context.canvas.addEventListener('mouseover', function(event){
+					var mouseX = event.clientX - context.canvas.offsetLeft;
+					var mouseY = event.clientY - context.canvas.offsetTop;
+					var status = document.getElementById('status')
+					status.innerHTML = mouseX+" | "+mouseY;
+				});
+				
+				var ponto1= [-1, -1];
+				
+				context.canvas.addEventListener('click', function(event){
+					if(ponto1[0] == -1){
+						context.clearRect(0, 0, canvas.width, canvas.height);
+					}
+					var mouseX = event.clientX - context.canvas.offsetLeft;
+					var mouseY = event.clientY - context.canvas.offsetTop;
+
+					context.fillStyle = "red";
+					context.fillRect(mouseX/10, mouseY/10, 1, 1);
+
+					if(ponto1[0] == -1){
+						ponto1[0] = mouseX/10;
+						ponto1[1] = mouseY/10;
+					}else{
+						if(ponto1[0] == mouseX/10){
+							for(i=ponto1[1]; i<mouseY/10; i++){
+								context.fillRect(0, i, 1, 1);
+							}
+					}else{
+						var m = (mouseY/10 - ponto1[1])/(mouseX/10 - ponto1[0]);
+						var b = mouseY/10 - m*mouseX/10;
+						var y;
+						if(ponto1[0] < mouseX/10){
+							for(i=ponto1[0]; i<mouseX/10; i++){
+								y = m*i + b;
+								context.fillRect(i, y, 1, 1);
+							}
+						}else{
+							for(i=mouseX/10; i<ponto1[0]; i++){
+								y = m*i + b;
+								context.fillRect(i, y, 1, 1);
+							}        
+						}        
+					}
+
+					ponto1 = [-1, -1];
+					
+					}
+
+
+				});
+
+			}
+
+			window.addEventListener('load', function(event) {
+				initCanvas();
+			});
+		</script>
+	</head>
+	
+	<body>
+
+		<canvas id="meu_canvas" width="500" height="500"></canvas>
+		<h2 id="status">0 | 0</h2>
+
+	</body>
+</html>
+

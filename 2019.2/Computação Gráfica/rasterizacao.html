@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Processando o Canvas na seção HEAD</title>
+		<style>
+			body{
+				text-align: center;	
+			}
+			
+			#caixa_canvas{
+				width: 80%;
+				height: 600px;
+			}
+			#info{
+					
+			}
+			#info h2{
+				font-size: 60px;	
+			}
+			#div_pontos{
+				margin-left: 80px;
+				position: relative;
+				float: left;
+			}
+			#canvas_pontos{
+				border: 1px solid black;
+			}
+			
+			#div_analitico{
+				margin-left: 50px;
+				margin-right: 80px;
+				position: relative;
+				float: left;
+			}
+			#canvas_analitico{
+				border: 1px solid red;
+			}
+			
+			#div_DDA{
+				margin-left: 80px;
+				position: relative;
+				float: left;
+			}
+			#canvas_DDA{
+				border: 1px solid green;
+			}
+			
+			#div_bresenham{
+				margin-left: 50px;
+				margin-right: 80px;
+				position: relative;
+				float: left;
+			}
+			#canvas_bresenham{
+				border: 1px solid blue;
+			}
+		</style>
+
+		<script>
+			function initCanvas(){
+				// Canvas dos pontos
+				var canvasPontos = document.getElementById('canvas_pontos');
+				var contextPontos = canvasPontos.getContext('2d');
+				contextPontos.scale(1, 1);
+				
+				// Canvas da rasterização analitica
+				var canvasAnalitico = document.getElementById('canvas_analitico');
+				var contextAnalitico = canvasAnalitico.getContext('2d');
+				contextAnalitico.scale(1, 1);
+				
+				// Canvas da rasterização DDA
+				var canvasDDA = document.getElementById('canvas_DDA');
+				var contextDDA = canvasDDA.getContext('2d');
+				contextDDA.scale(1, 1);
+				
+				// Canvas da rasterização Bresenham
+				var canvasBresenham = document.getElementById('canvas_bresenham');
+				var contextBresenham = canvasBresenham.getContext('2d');
+				contextBresenham.scale(1, 1);
+				
+				var ponto1= [-1, -1];
+				var p = 10;
+				function drawBoard(ctx){
+					for (var x = 0; x <= 500; x += 10) {
+						ctx.moveTo(x + p, 0);
+						ctx.lineTo(x + p, 500);
+					}
+					
+					for (var x = 0; x <= 500; x += 10) {
+						ctx.moveTo(0, x + p);
+						ctx.lineTo(500, x + p);
+					}
+					ctx.strokeStyle = "#DCDCDC";
+					ctx.stroke();
+				}
+				drawBoard(contextPontos);
+				drawBoard(contextAnalitico);
+				drawBoard(contextDDA);
+				drawBoard(contextBresenham);
+				
+				canvasPontos.addEventListener('click', function(evt) {
+					var rect = canvasPontos.getBoundingClientRect();
+					var mouseX = Math.floor( (evt.clientX - rect.left)/10 )
+					var mouseY = Math.floor( (evt.clientY - rect.top)/10 )
+					mouseX *= 10
+					mouseY *= 10
+					
+					contextPontos.fillStyle = "black";
+					contextPontos.fillRect(mouseX, mouseY, 10, 10);
+					
+					contextAnalitico.fillStyle = "red";
+					contextAnalitico.fillRect(mouseX, mouseY, 10, 10);
+					
+					contextDDA.fillStyle = "green";
+					contextDDA.fillRect(mouseX, mouseY, 10, 10);
+					
+					if(ponto1[0] == -1){
+						ponto1[0] = mouseX;
+						ponto1[1] = mouseY;
+					}else{
+						if(ponto1[0] == mouseX){
+							if(ponto1[1] > mouseY){
+								for(i=mouseY; i<ponto1[1]; i+=10){
+									contextAnalitico.fillRect(ponto1[0], i, 10, 10);
+								}
+							}else{
+								for(i=ponto1[1]; i<mouseY; i+=10){
+									contextAnalitico.fillRect(ponto1[0], i, 10, 10);
+								}
+							}
+							
+						}else{
+							var m = ((mouseY) - ponto1[1])/((mouseX) - ponto1[0]);
+							var b = (mouseY) - m*(mouseX);
+							var y;
+							if(ponto1[0] < mouseX){
+								for(i=ponto1[0]; i<mouseX; i+=10){
+									y = m*i + b;
+									y = Math.floor (y/10);
+									y = y*10;
+									contextAnalitico.fillRect(i, y, 10, 10);
+								}
+							}else{
+								for(i=mouseX; i<ponto1[0]; i+=10){
+									y = m*i + b;
+									y = Math.floor (y/10);
+									y = y*10;
+									contextAnalitico.fillRect(i, y, 10, 10);
+								}        
+							}        
+						}
+						
+						var dx = mouseX - ponto1[0]
+						var dy = mouseY - ponto1[1]
+						
+						
+						if(Math.abs(dx) > Math.abs(dy)){
+							step = Math.abs(dx)
+						}else{
+							step = Math.abs(dy)					
+						}
+						
+						var xinc = (dx/step)*10
+						var yinc = (dy/step)*10
+						
+						var xy = [ponto1[0], ponto1[1]]
+						
+						for(i=0; i<=Math.abs(step); i+=10){
+							contextDDA.fillRect(Math.round(xy[0]/10)*10, Math.round(xy[1]/10)*10, 10, 10);
+							xy[0] = xy[0] + xinc
+							xy[1] = xy[1] + yinc
+							
+						}
+						
+						var xy = [ponto1[0], ponto1[1]]
+						p = 2*dy - dx
+						
+						for(i= ponto1[0]; i<mouseX; i+=10){
+							contextBresenham.fillRect(i, xy[1], 10, 10)
+							if(p < 0){
+								p = p + (2*dy)
+							}else{
+								p = p + (2*dy) - (2*dx);
+								xy[1] = xy[1]+10;
+							}
+						}
+						
+						ponto1 = [-1, -1];
+					
+					}
+
+					
+					
+					contextBresenham.fillStyle = "blue";
+					contextBresenham.fillRect(mouseX, mouseY, 10, 10);
+					
+					
+				}, false);
+				
+				canvasPontos.addEventListener('mousemove', function(evt) {
+					var rect = canvasPontos.getBoundingClientRect();
+					var mouseX = Math.floor( (evt.clientX - rect.left)/10 )
+					var mouseY = Math.floor( (evt.clientY - rect.top)/10 )
+										
+					var message = mouseX +' | '+ mouseY;
+					
+					writeMessage(message);
+				}, false);
+				
+				function writeMessage(message) {
+						var status = document.getElementById('status')
+						status.innerHTML = message;
+					}
+				}
+			
+			window.addEventListener('load', function(event) {
+				initCanvas();
+			});
+		</script>
+	</head>
+	
+	<body>
+		<div id="caixa_canvas">
+			<div id="div_pontos">
+				<h2> Pontos </h2>
+				<canvas id="canvas_pontos" width="500" height="500"></canvas>
+			</div>
+			<div id="div_analitico">
+				<h2> Analítico </h2>
+				<canvas id="canvas_analitico" width="500" height="500"></canvas>
+			</div>
+			<div id="div_DDA">
+				<h2> DDA </h2>
+				<canvas id="canvas_DDA" width="500" height="500"></canvas>
+			</div>
+			<div id="div_bresenham">
+				<h2> Bresenham </h2>
+				<canvas id="canvas_bresenham" width="500" height="500"></canvas>
+			</div>
+		</div>
+		<div id="info">
+			<h2 id="status">0 | 0</h2>
+		</div>
+
+	</body>
+</html>
+
+

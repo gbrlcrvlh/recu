@@ -1,0 +1,201 @@
+/* Grid */
+.grid {
+	display: grid;
+}
+
+.subgrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+}
+
+.subgrid > div {
+	background: rgba(0,0,0,.3);
+}
+
+
+.grid-3 {
+	grid:
+		"nav nav nav" 100px
+		"menu menu menu" 40px 
+		"content content sidenav" 450px 
+		"footer footer footer" 100px 
+	/ 100px 1fr 450px;
+}
+
+.nav {
+	grid-area: nav;
+	background-image: url(header.jpg);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+	box-shadow: inset -36em 0px 180px -50px white ;
+}
+
+.nav h1{
+    font-size: 90px;
+    margin:0;
+    color: white;
+	position: absolute;
+	left: 0;
+}
+
+#skipmenu{  
+    position: absolute;
+    right: 10px;
+    font-size: 25px;
+}
+
+#skipmenu a{
+    text-decoration: none;
+    color: rgb(80, 78, 78);
+}
+
+.content {
+	grid-area: content;
+	margin-top: 20px;
+}
+
+.content h2{
+    margin:0;
+}
+
+.content h2 a{
+    font-size: 35px;
+    color: rgb(202, 98, 84);
+    text-decoration: none;
+}
+
+.content h3{
+    font-size: 30px;
+    color: rgb(156, 137, 50);
+    text-decoration: none;
+    margin: 10px 0px 10px 0px;
+}
+
+.blogentry{
+    font-size: 20px;
+    text-align: left;
+	margin-left: 50px;
+}
+
+.blogentry a{
+    color: rgb(202, 98, 84);
+}
+
+.content .imagefloat{
+    float: right;
+    border: 1px solid rgb(156, 137, 50);
+    padding: 2px;
+    margin: 0px 10px 0px 20px;
+    width: 120px;
+    height: 120px;
+}
+
+.blogentry ul{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    text-align: center;
+}
+
+.blogentry ul li{
+    display: inline-block;
+    text-align: center;
+    padding: 0px;
+    margin: 10px 0px 10px 0px;
+}
+
+.sidenav {
+	grid-area: sidenav;
+	border-left: 2px solid rgb(156, 137, 50);	
+   	margin-top: 20px;
+    padding-left: 20px;
+}
+
+.sidenav ul{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+.sidenav ul li{
+    padding: 0px;
+    margin: 10px 0px 10px 0px;
+}
+
+.sidenav ul li a{
+    font-size: 25px;
+    color: rgb(202, 98, 84);
+}
+
+.sidenav h3{
+    margin: 0;
+    font-size: 30px;
+    color: rgb(156, 137, 50);
+    text-decoration: none;
+}
+
+.menu {
+	grid-area: menu;
+	margin-top: 5px;
+	background-color: rgb(136, 161, 43);
+    padding: 0;
+}
+
+.menu ul{
+    margin:0;
+}
+
+.menu ul li{
+    margin:0;
+    display: inline-block;
+    text-align: center;
+    padding: 3px 0px 3px 0px;
+}
+
+.menu ul li:last-child{
+    border-right: 1px solid white;
+}
+
+.menu ul li a{
+    padding: 0px 16px 0px 16px;
+    border-left: 1px solid white;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+}
+
+.footer {
+	grid-area: footer;
+	margin-top: 5px;
+	background-color: rgb(136, 161, 43);
+    position: fixed;
+    bottom: 0;
+    text-align: right;
+    width: 100%;
+    padding: 5px 0px 5px 0px;
+}
+
+/* Grid Item */
+.item {
+	font-size: 1.5em;
+}
+
+.grid {
+	width: 100%;
+	margin: 0;
+}
+
+body{
+	margin: 0px;
+	padding: 0px;
+}
+
+h1 {
+	text-align: center;
+	font-size: 1.25em;
+	font-weight: normal;
+}
+

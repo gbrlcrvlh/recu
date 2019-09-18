@@ -1,0 +1,162 @@
+body{
+    margin: 0;
+}
+
+#header{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background-image: url(header.jpg);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    position: relative;
+    box-shadow: inset -40em 0px 150px -50px white ;
+}
+
+#header h1{
+    font-size: 70px;
+    margin:0;
+    color: white;
+}
+
+#skipmenu{  
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+}
+
+#skipmenu a{
+    text-decoration: none;
+    color: rgb(80, 78, 78);
+}
+
+#mainnav{
+    background-color: rgb(136, 161, 43);
+    margin-top: 5px;
+    padding: 0;
+}
+
+#mainnav ul{
+    margin:0;
+}
+
+#mainnav ul li{
+    margin:0;
+    display: inline-block;
+    text-align: center;
+    padding: 3px 0px 3px 0px;
+    
+}
+
+#mainnav ul li:last-child{
+    border-right: 1px solid white;
+}
+
+#mainnav ul li a{
+    padding: 0px 16px 0px 16px;
+    border-left: 1px solid white;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    
+}
+
+#menu{
+    border-left: 2px solid rgb(156, 137, 50);
+    position: absolute;
+    right: 30px;
+    width:25%;
+    margin-top: 30px;
+    padding-left: 20px;
+}
+
+#menu ul{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+#menu ul li{
+    padding: 0px;
+    margin: 10px 0px 10px 0px;
+}
+
+#menu ul li a{
+    font-size: 20px;
+    color: rgb(202, 98, 84);
+}
+
+#menu h3{
+    margin: 0;
+    font-size: 20px;
+    color: rgb(156, 137, 50);
+    text-decoration: none;
+}
+
+#contents{
+    width: 65%;
+    position: absolute;
+    left: 40px;
+    margin-top: 30px;
+    padding: 0;
+}
+
+#contents h2{
+    margin:0;
+}
+
+#contents h2 a{
+    font-size: 35px;
+    color: rgb(202, 98, 84);
+    text-decoration: none;
+}
+
+#contents h3{
+    font-size: 30px;
+    color: rgb(156, 137, 50);
+    text-decoration: none;
+    margin: 10px 0px 10px 0px;
+}
+
+.blogentry{
+    font-size: 20px;
+    text-align: left;
+}
+
+.blogentry a{
+    color: rgb(202, 98, 84);
+}
+
+#contents .imagefloat{
+    float: right;
+    border: 1px solid rgb(156, 137, 50);
+    padding: 2px;
+    margin: 0px 10px 0px 20px;
+    width: 120px;
+    height: 120px;
+}
+
+.blogentry ul{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    text-align: center;
+}
+
+.blogentry ul li{
+    display: inline-block;
+    text-align: center;
+    padding: 0px;
+    margin: 10px 0px 10px 0px;
+}
+
+#footer{
+    background-color: rgb(136, 161, 43);
+    position: fixed;
+    bottom: 0;
+    text-align: right;
+    width: 100%;
+    padding: 5px 0px 5px 0px;
+}
